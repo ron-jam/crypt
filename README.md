@@ -1,4 +1,4 @@
-# hello-world
+# hello-word
 
 some more edits here
 
