@@ -1,0 +1,45 @@
+How to generate Two-Factor authentication code from your Linux CLI
+Generate a new key pair for encryption if you don’t have a gpg key, run:
+
+$ gpg2 --full-gen-key
+
+options
+
+$ (1) RSA and RSA
+$ keysize: 4096
+$ key is valid for (0) // does not expire? y
+$ real name: NAME
+$ email: NAME@DOMAIN
+$ comment: COMMENT
+
+you selected this USER-ID:
+  "NAME (COMMENT) <NAME@DOMAIN>"
+
+$ (o)kay
+
+Next, create some directories and helper scripts:
+$ mkdir ~/.2fa/
+$ cd ~/.2fa/
+
+You can list GPG keys including GnuPG user id and key id, run:
+$ gpg --list-secret-keys --keyid-format LONG
+
+CD into ~/.2fa/ directory and run the following commands:
+cd ~/.2fa/
+
+### Step 1. create service directory ###
+### vivek@gmail.com also act as service name for encrypt.key.sh ###
+mkdir vivek@gmail.com
+
+### Step 2. Store totp secret key ###
+echo -n 'hilp zs6i c5qu bx7z akiz q75e wk5z z66b' > ~/.2fa/vivek@gmail.com/.key
+
+Encrypt the totp secret key file named ~/.2fa/vivek@gmail.com/.key with gpg
+and password protect it for security and privacy reasons using our encrypt.key.sh helper script:
+
+### Step 3. Secure totp secret key for service named vivek@gmail.com ###
+./encrypt.key.sh vivek@gmail.com
+
+create your first 6-digit code using oathtool command. However, we automated this process using decrypt.key.sh shell script that decrypts the totp secret and generates the 6-digit 2FA code. Simply run:
+./decrypt.key.sh vivek@gmail.com
+
