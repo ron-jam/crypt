@@ -1,3 +1,7 @@
+# Basic oathtool usage
+
+oathtool -b --totp 'SECRET-KEY'
+
 How to generate Two-Factor authentication code from your Linux CLI
 Generate a new key pair for encryption if you don’t have a gpg key, run:
 
